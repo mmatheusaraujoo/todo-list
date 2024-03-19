@@ -13,8 +13,8 @@ import { BlockUIModule } from "primeng/blockui";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
-import { CardModule } from "primeng/card";
-import { PanelModule } from "primeng/panel";
+import { AccordionModule } from 'primeng/accordion';
+import { BadgeModule } from 'primeng/badge';
 
 import { Todo } from "./models/todo";
 @Component({
@@ -29,8 +29,8 @@ import { Todo } from "./models/todo";
     ProgressSpinnerModule,
     InputTextModule,
     ButtonModule,
-    CardModule,
-    PanelModule,
+    AccordionModule,
+    BadgeModule
   ],
   providers: [NotificationService, TodoService, HttpClientModule],
   templateUrl: "./app.component.html",
