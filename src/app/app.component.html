@@ -1,0 +1,36 @@
+<p-blockUI [blocked]="(loading$ | async) || false">
+  <p-progressSpinner ariaLabel="loading" />
+</p-blockUI>
+<p-toast position="bottom-center" key="bc" />
+<div class="container">
+  <div class="task--input">
+    <span class="p-float-label">
+      <input pInputText id="input-text" [(ngModel)]="inputText" />
+      <label for="input-text">Nova Tarefa</label>
+    </span>
+    <p-button
+      size="large"
+      icon="pi pi-plus"
+      [rounded]="true"
+      (onClick)="refreshList()"
+    ></p-button>
+  </div>
+  <div>
+    <ng-container *ngFor="let todo of todoList$ | async; index as i">
+      <ng-container *ngIf="!todo.realizado; else done">
+        <p-panel [header]="todo.nome" [toggleable]="true">
+          <p>
+            {{ todo.descricao }}
+          </p>
+        </p-panel>
+      </ng-container>
+      <ng-template #done>
+        <p-panel [header]="todo.nome" [toggleable]="true">
+          <p>
+            {{ todo.descricao }}
+          </p>
+        </p-panel>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>
