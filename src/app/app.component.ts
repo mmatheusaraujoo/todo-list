@@ -51,4 +51,13 @@ export class AppComponent implements OnInit {
   refreshList() {
     this.todoService.refreshTodoList();
   }
+
+  changeState(todo:Todo){
+    todo.realizado = !todo.realizado;
+    this.todoService.todoChangeState(todo);
+  }
+
+  deleteTodo(todo:Todo){
+    this.todoService.deleteTodo(todo);
+  }
 }

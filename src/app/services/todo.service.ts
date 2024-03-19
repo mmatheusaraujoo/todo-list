@@ -52,9 +52,9 @@ export class TodoService {
     });
   }
 
-  updateTodo(todo: Todo) {
+  todoChangeState(todo: Todo) {
     this._loading.startLoading("updateTodo");
-    this.http.put(this.url, todo, { params: { id: todo.id } }).subscribe({
+    this.http.patch(this.url, { params: { id: todo.id } }).subscribe({
       next: () => {
         this.notificationService.success(
           "Alterar Atividade",
