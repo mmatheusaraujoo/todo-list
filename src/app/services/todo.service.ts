@@ -60,12 +60,13 @@ export class TodoService {
           "Alterar Atividade",
           "Atividade alterada com sucesso!",
         );
-        this.refreshTodoList();
         this._loading.stopLoading("updateTodo");
+        this.refreshTodoList(); 
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);
         this._loading.stopLoading("updateTodo");
+        this.refreshTodoList(); 
       },
     });
   }
