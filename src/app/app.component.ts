@@ -13,10 +13,11 @@ import { BlockUIModule } from "primeng/blockui";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
-import { AccordionModule } from 'primeng/accordion';
-import { BadgeModule } from 'primeng/badge';
+import { AccordionModule } from "primeng/accordion";
+import { BadgeModule } from "primeng/badge";
 
 import { Todo } from "./models/todo";
+import { generateMokedTodo } from "./helpers/tests";
 @Component({
   selector: "app-root",
   standalone: true,
@@ -30,7 +31,7 @@ import { Todo } from "./models/todo";
     InputTextModule,
     ButtonModule,
     AccordionModule,
-    BadgeModule
+    BadgeModule,
   ],
   providers: [NotificationService, TodoService, HttpClientModule],
   templateUrl: "./app.component.html",
@@ -52,12 +53,16 @@ export class AppComponent implements OnInit {
     this.todoService.refreshTodoList();
   }
 
-  changeState(todo:Todo){
+  changeState(todo: Todo) {
     todo.realizado = !todo.realizado;
     this.todoService.todoChangeState(todo);
   }
 
-  deleteTodo(todo:Todo){
+  deleteTodo(todo: Todo) {
     this.todoService.deleteTodo(todo);
+  }
+
+  createMokedTodo() {
+    this.todoService.createTodo(generateMokedTodo());
   }
 }

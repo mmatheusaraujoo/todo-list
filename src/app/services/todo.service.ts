@@ -61,19 +61,20 @@ export class TodoService {
           "Atividade alterada com sucesso!",
         );
         this._loading.stopLoading("updateTodo");
-        this.refreshTodoList(); 
+        this.refreshTodoList();
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);
         this._loading.stopLoading("updateTodo");
-        this.refreshTodoList(); 
+        this.refreshTodoList();
       },
     });
   }
 
   deleteTodo(todo: Todo) {
     this._loading.startLoading("deleteTodo");
-    this.http.delete(this.url, { params: { id: todo.id } }).subscribe({
+    const newUlr = this.url + `/${todo.id}`;
+    this.http.delete(newUlr).subscribe({
       next: () => {
         this.notificationService.success(
           "Deletar atividade",
