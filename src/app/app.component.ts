@@ -7,6 +7,7 @@ import { Observable } from "rxjs";
 
 import { NotificationService } from "./services/notification.service";
 import { TodoService } from "./services/todo.service";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 
 import { ToastModule } from "primeng/toast";
 import { BlockUIModule } from "primeng/blockui";
@@ -19,6 +20,7 @@ import { InputNumberModule } from "primeng/inputnumber";
 
 import { Todo } from "./models/todo";
 import { generateMokedTodo } from "./helpers/tests";
+import { TodoDialogComponent } from "./components/todo-dialog/todo-dialog.component";
 @Component({
   selector: "app-root",
   standalone: true,
@@ -34,8 +36,14 @@ import { generateMokedTodo } from "./helpers/tests";
     AccordionModule,
     BadgeModule,
     InputNumberModule,
+    TodoDialogComponent,
   ],
-  providers: [NotificationService, TodoService, HttpClientModule],
+  providers: [
+    NotificationService,
+    TodoService,
+    HttpClientModule,
+    DialogService,
+  ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss",
 })
@@ -46,7 +54,12 @@ export class AppComponent implements OnInit {
   public inputText: string | undefined;
   public numberSelector: number = 1;
 
-  constructor(public todoService: TodoService) {}
+  public dialogRef: DynamicDialogRef | undefined;
+
+  constructor(
+    public todoService: TodoService,
+    private dialogService: DialogService,
+  ) {}
 
   ngOnInit(): void {
     this.todoService.refreshTodoList();
@@ -59,6 +72,26 @@ export class AppComponent implements OnInit {
   changeState(todo: Todo) {
     todo.realizado = !todo.realizado;
     this.todoService.todoChangeState(todo);
+  }
+
+  createTodo() {
+    this.dialogRef = this.dialogService.open(TodoDialogComponent, {
+      width: "50vw",
+      contentStyle: { overflow: "auto" },
+      header: "Criar Tarefa",
+      breakpoints: {
+        "960px": "75vw",
+        "640px": "90vw",
+      },
+    });
+
+    this.dialogRef.onClose.subscribe(() => {
+      this.refreshList();
+    });
+  }
+
+  updateTodo(todo: Todo) {
+    this.todoService.updateTodo(todo);
   }
 
   deleteTodo(todo: Todo) {

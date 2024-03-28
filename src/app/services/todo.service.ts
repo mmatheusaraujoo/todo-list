@@ -71,6 +71,31 @@ export class TodoService {
     });
   }
 
+  updateTodo(todo: Todo) {
+    this._loading.startLoading("updateTodo");
+    const updateUlr = this.url + `/${todo.id}`;
+    const updateDto = {
+      nome: todo.nome,
+      descricao: todo.descricao,
+      prioridade: todo.prioridade,
+    } as Partial<Todo>;
+
+    this.http.put(updateUlr, updateDto).subscribe({
+      next: () => {
+        this.notificationService.success(
+          "Ativida Alterada",
+          "Atividade excluida com sucesso!",
+        );
+        this.refreshTodoList();
+        this._loading.stopLoading("updateTodo");
+      },
+      error: (e: HttpErrorResponse) => {
+        this.notificationService.error(e.statusText, e.message);
+        this._loading.stopLoading("updateTodo");
+      },
+    });
+  }
+
   deleteTodo(todo: Todo) {
     this._loading.startLoading("deleteTodo");
     const newUlr = this.url + `/${todo.id}`;
