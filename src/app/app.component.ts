@@ -15,6 +15,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
 import { AccordionModule } from "primeng/accordion";
 import { BadgeModule } from "primeng/badge";
+import { InputNumberModule } from "primeng/inputnumber";
 
 import { Todo } from "./models/todo";
 import { generateMokedTodo } from "./helpers/tests";
@@ -32,6 +33,7 @@ import { generateMokedTodo } from "./helpers/tests";
     ButtonModule,
     AccordionModule,
     BadgeModule,
+    InputNumberModule,
   ],
   providers: [NotificationService, TodoService, HttpClientModule],
   templateUrl: "./app.component.html",
@@ -42,6 +44,7 @@ export class AppComponent implements OnInit {
   public todoList$: Observable<Todo[]> | undefined = this.todoService.todo$;
   public loading$ = this.todoService.loading$;
   public inputText: string | undefined;
+  public numberSelector: number = 1;
 
   constructor(public todoService: TodoService) {}
 
@@ -60,6 +63,13 @@ export class AppComponent implements OnInit {
 
   deleteTodo(todo: Todo) {
     this.todoService.deleteTodo(todo);
+  }
+
+  checkSeverity(priority: number) {
+    if (priority >= 9) return "danger";
+    if (priority >= 6) return "warning";
+    if (priority >= 3) return "info";
+    return "success";
   }
 
   createMokedTodo() {
