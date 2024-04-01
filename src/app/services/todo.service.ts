@@ -34,7 +34,7 @@ export class TodoService {
     });
   }
 
-  createTodo(todo: Todo) {
+  createTodo(todo: Partial<Todo>) {
     this._loading.startLoading("createTodo");
     this.http.post(this.url, todo).subscribe({
       next: () => {
@@ -42,8 +42,8 @@ export class TodoService {
           "Criar Atividade",
           "Atividade criada com sucesso!",
         );
-        this.refreshTodoList();
         this._loading.stopLoading("createTodo");
+        this.refreshTodoList();
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);
@@ -86,8 +86,8 @@ export class TodoService {
           "Ativida Alterada",
           "Atividade excluida com sucesso!",
         );
-        this.refreshTodoList();
         this._loading.stopLoading("updateTodo");
+        this.refreshTodoList();
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);
@@ -105,8 +105,8 @@ export class TodoService {
           "Deletar atividade",
           "Atividade excluida com sucesso!",
         );
-        this.refreshTodoList();
         this._loading.stopLoading("deleteTodo");
+        this.refreshTodoList();
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);

@@ -1,1 +1,27 @@
-<p>todo-dialog works!</p>
+<div class="flex flex-column gap-3">
+    <div class="flex flex-column gap-2">
+        <div class="flex flex-column gap-2">
+            <label for="name">Nome</label>
+            <input pInputText id="name" [(ngModel)]="name" />
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="description">Descrição</label>
+            <input pInputText id="description" [(ngModel)]="description" />
+        </div>
+        <div class="flex flex-column gap-2">
+            <label for="priority">Prioridade</label>
+            <p-inputNumber [(ngModel)]="priority" [showButtons]="true" [min]="0" [max]="5" [size]="1"
+                buttonLayout="horizontal" aria-describedby='priority-help' inputId="priority" spinnerMode="horizontal"
+                decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"></p-inputNumber>
+        </div>
+    </div>
+    <div class="ml-auto">
+        <ng-container *ngIf="!!todo; else addTodo">
+            <p-button label="Editar" [outlined]="true" (onClick)="updateTodo()"></p-button>
+        </ng-container>
+        <ng-template #addTodo>
+            <p-button label="Adicionar" [outlined]="true" (onClick)="createTodo()"></p-button>
+        </ng-template>
+    </div>
+</div>

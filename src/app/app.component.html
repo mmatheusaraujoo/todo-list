@@ -2,10 +2,14 @@
   <p-progressSpinner ariaLabel="loading" />
 </p-blockUI>
 <p-toast position="bottom-center" key="bc" />
-<div class="sm:surface-ground sm:p-3 border-round m-3">
+<div class="sm:surface-ground w-full p-3 border-round sm:align-self-center sm:w-10 md:w-8 xl:w-5">
   <div class="flex flex-auto flex-column gap-3 my-3">
-    <h2>Lista de Tarefas</h2>
-    <ng-container *ngFor="let todo of todoList$ | async">
+    <div class="flex justify-content-between px-3">
+      <h2>Lista de Tarefas</h2>
+      <p-button class="hidden sm:block" icon="pi pi-plus" label="Adicionar Tarefa" [rounded]="true" [outlined]="true"
+        (onClick)="createTodo()" />
+    </div>
+    <div *ngFor="let todo of todoList$ | async" class="overflow-y-auto">
       <p-accordion class="w-full">
         <p-accordionTab class="bg-primary">
           <ng-template pTemplate="header">
@@ -37,7 +41,7 @@
           </div>
         </p-accordionTab>
       </p-accordion>
-    </ng-container>
+    </div>
   </div>
 </div>
 <div class="flex fixed justify-content-center align-items-center surface-50 bottom-0 min-w-full py-2 sm:hidden">

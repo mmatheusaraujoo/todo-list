@@ -78,7 +78,7 @@ export class AppComponent implements OnInit {
     this.dialogRef = this.dialogService.open(TodoDialogComponent, {
       width: "50vw",
       contentStyle: { overflow: "auto" },
-      header: "Criar Tarefa",
+      header: "Adicionar Tarefa",
       breakpoints: {
         "960px": "75vw",
         "640px": "90vw",
@@ -91,7 +91,20 @@ export class AppComponent implements OnInit {
   }
 
   updateTodo(todo: Todo) {
-    this.todoService.updateTodo(todo);
+    this.dialogRef = this.dialogService.open(TodoDialogComponent, {
+      width: "50vw",
+      contentStyle: { overflow: "auto" },
+      header: "Editar Tarefa",
+      breakpoints: {
+        "960px": "75vw",
+        "640px": "90vw",
+      },
+      data: todo,
+    });
+
+    this.dialogRef.onClose.subscribe(() => {
+      this.refreshList();
+    });
   }
 
   deleteTodo(todo: Todo) {
@@ -99,10 +112,9 @@ export class AppComponent implements OnInit {
   }
 
   checkSeverity(priority: number) {
-    if (priority >= 9) return "danger";
-    if (priority >= 6) return "warning";
-    if (priority >= 3) return "info";
-    return "success";
+    if (priority >= 4) return "danger";
+    if (priority >= 2) return "warning";
+    return "info";
   }
 
   createMokedTodo() {
