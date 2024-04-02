@@ -10,18 +10,18 @@
         </div>
         <div class="flex flex-column gap-2">
             <label for="priority">Prioridade</label>
-            <p-inputNumber [(ngModel)]="priority" [showButtons]="true" [min]="0" [max]="5" [size]="1"
+            <p-inputNumber [(ngModel)]="priority" [showButtons]="true" [min]="1" [max]="5" [size]="1"
                 buttonLayout="horizontal" aria-describedby='priority-help' inputId="priority" spinnerMode="horizontal"
                 decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
-                incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"></p-inputNumber>
+                incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" />
         </div>
     </div>
     <div class="ml-auto">
         <ng-container *ngIf="!!todo; else addTodo">
-            <p-button label="Editar" [outlined]="true" (onClick)="updateTodo()"></p-button>
+            <p-button label="Editar" [outlined]="true" (onClick)="updateTodo()" />
         </ng-container>
         <ng-template #addTodo>
-            <p-button label="Adicionar" [outlined]="true" (onClick)="createTodo()"></p-button>
+            <p-button label="Adicionar" [outlined]="true" (onClick)="createTodo()" />
         </ng-template>
     </div>
 </div>

@@ -9,38 +9,37 @@
       <p-button class="hidden sm:block" icon="pi pi-plus" label="Adicionar Tarefa" [rounded]="true" [outlined]="true"
         (onClick)="createTodo()" />
     </div>
-    <div *ngFor="let todo of todoList$ | async" class="overflow-y-auto">
+    <div>
+      @for (todo of todoList$ | async; track todo.id) {
       <p-accordion class="w-full">
         <p-accordionTab class="bg-primary">
           <ng-template pTemplate="header">
             <span class="flex align-items-center justify-content-between gap-2 w-full">
               <div class="flex gap-2">
                 <span class=" font-bold" [ngClass]="todo.realizado ? 'line-through' : ''">{{todo.nome}}</span>
-                <p-badge value="{{todo.prioridade}}" [severity]="checkSeverity(todo.prioridade)"></p-badge>
+                <p-badge value="{{todo.prioridade}}" [severity]="checkSeverity(todo.prioridade)" />
               </div>
               <div class="ml-auto flex gap-2">
-                <ng-container *ngIf="!todo.realizado; else realizado">
-                  <p-button icon="pi pi-check" [rounded]="true" [raised]="true" [outlined]="true"
-                    (onClick)="changeState(todo); $event.stopPropagation()" aria-Label="Concluir Tarefa" />
-                </ng-container>
-                <ng-template #realizado>
-                  <p-button icon="pi pi-times" [rounded]="true" [raised]="true" [outlined]="true" severity="warning"
-                    (onClick)="changeState(todo); $event.stopPropagation()" aria-Label="Definir como Tarefa Pendente" />
-                </ng-template>
+                @if (!todo.realizado) {
+                <p-button icon="pi pi-check" [rounded]="true" [raised]="true" [outlined]="true"
+                  (onClick)="changeState(todo); $event.stopPropagation()" aria-Label="Concluir Tarefa" />
+                }@else {
+                <p-button icon="pi pi-times" [rounded]="true" [raised]="true" [outlined]="true" severity="warning"
+                  (onClick)="changeState(todo); $event.stopPropagation()" aria-Label="Definir como Tarefa Pendente" />
+                }
+                <p-button icon="pi pi-pencil" [rounded]="true" [raised]="true" [outlined]="true" severity="info"
+                  aria-Label="Editar Tarefa" (onClick)="updateTodo(todo); $event.stopPropagation()" />
                 <p-button icon="pi pi-trash" [rounded]="true" [raised]="true" [outlined]="true" severity="danger"
                   aria-Label="Excluir Tarefa" (onClick)="deleteTodo(todo); $event.stopPropagation()" />
               </div>
             </span>
           </ng-template>
-          <div class="flex justify-content-between">
-            <p class="m-0 text-wrap">
-              {{todo.descricao}}
-            </p>
-            <p-button class="align-self-end" icon="pi pi-pencil" [rounded]="true" [raised]="true" [text]="true"
-              severity="info" label="Editar" (onClick)="updateTodo(todo); $event.stopPropagation()" />
-          </div>
+          <p class="m-0 text-wrap">
+            {{todo.descricao}}
+          </p>
         </p-accordionTab>
       </p-accordion>
+      }
     </div>
   </div>
 </div>

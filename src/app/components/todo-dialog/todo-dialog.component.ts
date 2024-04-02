@@ -40,7 +40,7 @@ export class TodoDialogComponent implements OnInit, OnDestroy {
   id: number | undefined;
   name: string | undefined;
   description: string | undefined;
-  priority: number = 0;
+  priority: number = 1;
 
   constructor(
     private todoService: TodoService,
