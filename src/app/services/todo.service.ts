@@ -42,8 +42,8 @@ export class TodoService {
           "Criar Atividade",
           "Atividade criada com sucesso!",
         );
-        this._loading.stopLoading("createTodo");
         this.refreshTodoList();
+        this._loading.stopLoading("createTodo");
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);
@@ -60,8 +60,8 @@ export class TodoService {
           "Alterar Atividade",
           "Atividade alterada com sucesso!",
         );
-        this._loading.stopLoading("updateTodo");
         this.refreshTodoList();
+        this._loading.stopLoading("updateTodo");
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);
@@ -80,14 +80,14 @@ export class TodoService {
       prioridade: todo.prioridade,
     } as Partial<Todo>;
 
-    this.http.put(updateUlr, updateDto).subscribe({
-      next: () => {
+    this.http.put<Todo[]>(updateUlr, updateDto).subscribe({
+      next: (todo) => {
         this.notificationService.success(
           "Ativida Alterada",
-          "Atividade excluida com sucesso!",
+          "Atividade alterada com sucesso!",
         );
+        this._todos$.next(todo);
         this._loading.stopLoading("updateTodo");
-        this.refreshTodoList();
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);
@@ -105,8 +105,8 @@ export class TodoService {
           "Deletar atividade",
           "Atividade excluida com sucesso!",
         );
-        this._loading.stopLoading("deleteTodo");
         this.refreshTodoList();
+        this._loading.stopLoading("deleteTodo");
       },
       error: (e: HttpErrorResponse) => {
         this.notificationService.error(e.statusText, e.message);
